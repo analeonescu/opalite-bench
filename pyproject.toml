@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "labsafebench"
+version = "0.1.0"
+description = "A small, open-source proof-of-concept benchmark for evaluating AI agents operating simulated laboratory tools under varying access, autonomy, and safeguard configurations."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = [
+    "inspect-ai>=0.3.60",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4",
+]
+
+[tool.setuptools.packages.find]
+include = ["labsafebench*"]
+
+[tool.setuptools.package-data]
+labsafebench = ["tasks/scenarios/**/*.yaml"]
