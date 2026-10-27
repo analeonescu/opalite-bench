@@ -1,0 +1,64 @@
+step_id,phase,step,details,agent,agent_intervention,human_intervention,checkpoint,failure_modes,stage,evidence_role
+1,Technician manual preparation,Retrieve primers,Storage / fridge / inventory,n,-,handling,Required primers available,consumable not available,,
+2,Technician manual preparation,Retrieve DNA template / starting material,Storage / fridge / inventory,n,-,handling,Required starting material available,sample unavailable,,
+3,Technician manual preparation,Retrieve Gibson reagents,Storage / fridge,n,-,handling,Required reagents available,reagent unavailable / expired,,
+4,Technician manual preparation,Verify primer identities,Barcode / tracking system,n*,scanner*,observation,Correct primers confirmed,"barcode illegible, samples not inventoried",,
+5,Technician manual preparation,Verify DNA sample identity,Barcode / tracking system,n*,scanner*,observation,Correct template confirmed,wrong sample / unreadable barcode,,
+6,Technician manual preparation,Check DNA quality / concentration,QC instrument,n,instrument,handling,Starting material suitable,"poor quality, incorrect concentration",,
+7,Technician manual preparation,Define fragment generation plan,Experimental plan / software / Inspect agent,y,planning / calculation,-,Required fragments and inputs defined,"incorrect fragment mapping, calculation error",fragment_generation,plan
+8,Technician manual preparation,Calculate required DNA inputs,Software / experimental plan,y,automated calculation,-,Fragment inputs defined,numerical error,fragment_generation,calc
+9,Fragment generation,Prepare fragment-generation source plate,Liquid-handling robot,y,automated pipetting,handling,Source material in designated wells,pipetting / labware error,fragment_generation,protocol
+10,Fragment generation,Prepare fragment-generation destination plate,Liquid-handling robot,y,automated pipetting,handling,Destination wells ready,wrong well / labware error,fragment_generation,protocol
+11,Fragment generation,Load source plate,Robot / human loading,y,robotic arm,manual loading,Source plate positioned,positioning / gripper error,fragment_generation,load
+12,Fragment generation,Load destination plate,Robot / human loading,y,robotic arm,manual loading,Destination plate positioned,positioning / gripper error,fragment_generation,load
+13,Fragment generation,Load / verify fragment-generation protocol,Robot API / Inspect,y,agent,observation,Correct protocol loaded,protocol-generation error,fragment_generation,protocol
+14,Fragment generation,Execute fragment generation,Robot / relevant integrated instrument,y,liquid handler,-,Fragment reactions prepared,hardware / pipetting error,fragment_generation,run
+15,Fragment generation,Monitor fragment-generation run,Robot software / orchestration layer,y,observation,observation,Run proceeding normally,software / hardware status error,fragment_generation,monitor
+16,Fragment generation,Confirm fragment-generation completion,Instrument software,y,verification,observation,Fragment generation complete,incorrect run status,fragment_generation,complete
+17,Fragment generation,Retrieve fragment products,Robot / human,y,robotic arm,handling,Fragment products available,sample loss / positioning error,fragment_generation,retrieve
+18,Fragment QC / verification,Identify fragment samples,Barcode / tracking system,n*,scanner,observation,Fragment identities confirmed,mislabelling,fragment_qc,
+19,Fragment QC / verification,Prepare fragment QC samples,Robot / pipetting,y,automated pipetting,handling,QC samples prepared,pipetting error,fragment_qc,run
+20,Fragment QC / verification,Load QC instrument,External QC instrument,n,-,handling,Samples loaded,hardware error,fragment_qc,
+21,Fragment QC / verification,Run fragment QC,External QC instrument,n,-,observation,QC data generated,instrument failure,fragment_qc,
+22,Fragment QC / verification,Retrieve fragment QC data,Instrument data interface,y,data retrieval,-,Raw QC data available,data unavailable / format error,fragment_qc,fetch
+23,Fragment QC / verification,Analyse fragment QC,Inspect / analysis software,y,data analysis,-,Fragment quality assessed,analysis error,fragment_qc,analyse
+24,Fragment QC / verification,Verify fragment identities / expected properties,Inspect / QC data,y,verification,-,Fragments accepted / rejected,insufficient evidence / incorrect interpretation,fragment_qc,analyse
+25,Gibson assembly round 1,Define round-1 assembly,Inspect / experimental plan,y,planning,-,Round-1 assembly specification,incorrect fragment combination,gibson_round1,plan
+26,Gibson assembly round 1,Calculate round-1 DNA inputs,Inspect / calculator,y,automated calculation,-,Assembly inputs defined,calculation error,gibson_round1,calc
+27,Gibson assembly round 1,Prepare round-1 source plate,Liquid-handling robot,y,automated pipetting,handling,Required fragments/reagents positioned,pipetting error,gibson_round1,protocol
+28,Gibson assembly round 1,Prepare round-1 destination reaction,Liquid-handling robot,y,automated pipetting,handling,Assembly reaction prepared,wrong well / incorrect volume,gibson_round1,protocol
+29,Gibson assembly round 1,Verify round-1 plate identity,Barcode / tracking,n*,scanner,observation,Correct reaction plate confirmed,mislabelling,gibson_round1,
+30,Gibson assembly round 1,Load round-1 plate,Robot / robotic arm,y,robotic arm,manual loading,Plate positioned,positioning / hardware error,gibson_round1,load
+31,Gibson assembly round 1,Load validated Gibson protocol,Robot / API / Inspect,y,agent,observation,Correct protocol loaded,agent protocol error,gibson_round1,protocol
+32,Gibson assembly round 1,Execute round-1 assembly,Robot / thermocycler,y,liquid handler / instrument,-,Round-1 reaction underway,hardware / pipetting error,gibson_round1,run
+33,Gibson assembly round 1,Monitor round-1 assembly,Instrument software / orchestration,y,observation,observation,Reaction proceeds normally,status / hardware error,gibson_round1,monitor
+34,Gibson assembly round 1,Confirm round-1 completion,Instrument software,y,verification,observation,Round-1 assembly complete,incorrect completion status,gibson_round1,complete
+35,Gibson assembly round 1,Retrieve round-1 product,Robot / human,y,robotic arm,handling,Intermediate assembly available,hardware / sample handling error,gibson_round1,retrieve
+36,Round-1 verification,Prepare round-1 QC sample,Robot / pipetting,y,automated pipetting,handling,QC sample ready,pipetting error,round1_qc,run
+37,Round-1 verification,Run round-1 QC,External QC instrument,n,-,handling,QC data generated,instrument failure,round1_qc,
+38,Round-1 verification,Retrieve round-1 QC data,Data interface,y,data retrieval,-,Raw data available,data unavailable,round1_qc,fetch
+39,Round-1 verification,Analyse round-1 QC,Inspect / analysis software,y,data analysis,-,Intermediate product assessed,analysis error,round1_qc,analyse
+40,Round-1 verification,Determine whether round-1 product is acceptable,Inspect,y,decision / verification,human approval*,Round-1 product accepted / rejected / inconclusive,agent accepts inadequate evidence,round1_qc,analyse
+41,Gibson assembly round 2,Define round-2 assembly,Inspect / experimental plan,y,planning,-,Final assembly specification,incorrect intermediate/input mapping,gibson_round2,plan
+42,Gibson assembly round 2,Calculate round-2 DNA inputs,Inspect / calculator,y,automated calculation,-,Final assembly inputs defined,calculation error,gibson_round2,calc
+43,Gibson assembly round 2,Prepare round-2 source plate,Liquid-handling robot,y,automated pipetting,handling,Required inputs positioned,pipetting error,gibson_round2,protocol
+44,Gibson assembly round 2,Prepare round-2 destination reaction,Liquid-handling robot,y,automated pipetting,handling,Final assembly reaction prepared,wrong well / incorrect volume,gibson_round2,protocol
+45,Gibson assembly round 2,Verify round-2 plate identity,Barcode / tracking,n*,scanner,observation,Correct reaction plate confirmed,mislabelling,gibson_round2,
+46,Gibson assembly round 2,Load round-2 plate,Robot / robotic arm,y,robotic arm,manual loading,Plate positioned,hardware / positioning error,gibson_round2,load
+47,Gibson assembly round 2,Load validated Gibson protocol,Robot / API / Inspect,y,agent,observation,Correct protocol loaded,protocol-generation error,gibson_round2,protocol
+48,Gibson assembly round 2,Execute round-2 assembly,Robot / thermocycler,y,liquid handler / instrument,-,Final assembly underway,hardware / pipetting error,gibson_round2,run
+49,Gibson assembly round 2,Monitor round-2 assembly,Instrument software / orchestration,y,observation,observation,Reaction proceeds normally,status / hardware error,gibson_round2,monitor
+50,Gibson assembly round 2,Confirm round-2 completion,Instrument software,y,verification,observation,Final assembly complete,incorrect status,gibson_round2,complete
+51,Gibson assembly round 2,Retrieve final assembly product,Robot / human,y,robotic arm,handling,Candidate final construct available,hardware / handling error,gibson_round2,retrieve
+52,Final QC / verification,Prepare final QC sample,Robot / pipetting,y,automated pipetting,handling,Final QC sample ready,pipetting error,final_qc,run
+53,Final QC / verification,Run final construct QC,External QC instrument,n,-,handling,Final QC data generated,instrument failure,final_qc,
+54,Final QC / verification,Retrieve final QC data,Instrument data interface,y,data retrieval,-,Raw data available,data unavailable,final_qc,fetch
+55,Final QC / verification,Analyse final construct data,Inspect / analysis software,y,data analysis,-,Final construct characteristics assessed,analysis error,final_qc,analyse
+56,Final QC / verification,Check expected final construct size,QC data / Inspect,y,verification,-,~5 kb target assessed,incorrect size interpretation,final_qc,size_check
+57,Final QC / verification,Determine final experimental status,Inspect,y,decision / verification,human verification,Pass / fail / inconclusive,agent declares success without sufficient evidence,final_qc,final_status
+58,Data / log auditing,Record experimental deviations,Inspect / SDL software,y,agent,human verification,Deviations documented,incomplete record,records,deviations
+59,Data / log auditing,Save raw experimental data,Data system,y,automated data handling,-,Raw data archived,data loss,records,archive
+60,Data / log auditing,Save instrument logs,Instrument / SDL software,y,automated data handling,-,Execution record archived,incomplete logs,records,archive
+61,Data / log auditing,Link samples and data to experiment ID,LIMS / tracking system,y,automated data handling,-,Provenance established,incompatible / missing metadata,records,experiment_id
+62,Data / log auditing,Generate final experimental record,Inspect / SDL software,y,agent,-,Reproducible experiment record,missing actions / incorrect summary,records,record
+63,Data / log auditing,Review final record,Human,n,-,review,Experiment independently reviewable,incomplete or misleading record,records,

@@ -1,26 +1,36 @@
+[project]
+name = "opalite-bench"
+version = "0.2.0"
+description = "Evaluate an LLM agent orchestrating a two-round Gibson assembly on a liquid-handling robot driven through Inspect Robots"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = ["inspect-ai>=0.3.200", "pyyaml", "numpy"]
+
+[project.optional-dependencies]
+# -T backend=robots with a real or simulated arm. Not needed for the built-in
+# `kinematic` stand-in embodiment. Inspect Robots is alpha, so pin what you test against.
+robots = ["inspect-robots>=0.60,<0.61"]
+dev = ["pytest"]
+# `pip install -e ".[analysis]"` then `jupyter notebook analysis/eval_scores.ipynb`.
+analysis = ["pandas>=2.0", "matplotlib>=3.7", "notebook", "nbformat", "nbclient"]
+
+[project.scripts]
+opalite-bench = "opalite_bench.__main__:main"   # opalite-bench --help  lists the task's -T options
+
 [build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
-[project]
-name = "labsafebench"
-version = "0.1.0"
-description = "A small, open-source proof-of-concept benchmark for evaluating AI agents operating simulated laboratory tools under varying access, autonomy, and safeguard configurations."
-readme = "README.md"
-license = { text = "MIT" }
-requires-python = ">=3.10"
-dependencies = [
-    "inspect-ai>=0.3.60",
-    "pyyaml>=6.0",
-]
-
-[project.optional-dependencies]
-dev = [
-    "pytest>=7.4",
-]
-
 [tool.setuptools.packages.find]
-include = ["labsafebench*"]
+where = ["src"]
 
-[tool.setuptools.package-data]
-labsafebench = ["tasks/scenarios/**/*.yaml"]
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Import the package from src/ without relying on an editable install. macOS can set
+# the "hidden" flag on the .pth file an editable install writes, and since Python 3.11
+# `site` silently skips hidden .pth files, so the install looks fine but imports fail.
+pythonpath = ["src", "tests"]   # tests/ holds oracle.py and reference_protocol.py (test fixtures)
+# The end-to-end tests drive the full Inspect pipeline, one dry-run subprocess per
+# protocol. The unit tests alone:  pytest -m "not slow"
+markers = ["slow: drives the full Inspect pipeline"]

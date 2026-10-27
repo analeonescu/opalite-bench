@@ -217,6 +217,4 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-# LabSafeBench eval logs (regenerate with scripts/run_pilot.py)
-#results/logs/
-#*.eval
+.DS_Store
